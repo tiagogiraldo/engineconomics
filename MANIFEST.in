@@ -1,0 +1,13 @@
+include setup.cfg
+include .github/CONTRIBUTING.md
+include LICENSE
+include README.md
+include INSTALL.md 
+include CONTRIBUTORS 
+include pyproject.toml
+
+recursive-include engineconomics/data *
+recursive-include engineconomics *.py *.ini *.txt *.in *.md
+
+recursive-exclude * __pycache__ *.npy *.npz *.c *.cpp *.h *.pyx *.pyd *.pxd *.pxi
+recursive-exclude build/*

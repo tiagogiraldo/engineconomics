@@ -1,16 +1,51 @@
 Metadata-Version: 2.1
 Name: engineconomics
 Version: 0.0.1
-Summary: This package develops a finnancial calculator with python.
+Summary: This package computes the basic financial formulas in python as those used in engineering economics.
+Home-page: https://github.com/tiagogiraldo/engineconomics
+Download-URL: https://pypi.org/project/caer
 Author: Santiago Giraldo
-Author-email: 
-Keywords: python,finance calculator,engineering economics,fixed income
-Classifier: Development Status :: 3 - Alpha
+Author-email: sgmlmail@protonmail.com
+Maintainer: Santiago Giraldo
+License: AGPL3 License
+Project-URL: Bug Tracker, https://github.com/tiagogiraldo/engineconomics/issues
+Project-URL: Documentation, https://github.com/tiagogiraldo/engineconomics/docs
+Project-URL: Funding, ""
+Project-URL: Source Code, https://github.com/tiagogiraldo/engineconomics
+Keywords: engineconomics,egineering economics,finance,economics
+Platform: Any
+Classifier: Development Status :: 3 - Alpha,
 Classifier: Intended Audience :: Finance
-Classifier: Programing Language :: Python :: 3
-Classifier: Operating System :: POSIX :: Linux
-Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Intended Audience:: Economics,
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
 Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: Unix
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Finance
+Classifier: Topic :: Scientific/Engineering :: Economics
+Classifier: Topic :: Scientific/Engineering :: Engineering Economics
+Classifier: License :: OSI Approved :: AGPL3 License
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
 License-File: LICENSE
 
-This package computes the basic financial formulas in python as those used in engineering economics.
+# engineconomics
+
+This library is designed to solve the main problems that arise in the area of Engineering Economics.  It focuses on financial mathematics that occur over uniform time periods.  
+
+With this tool it is possible to plot cash flows commonly encountered in economic engineering problems.
+
+The functions developed here can be treated within dataframes of the Pandas library, and thus take advantage of the functionalities that this library offers.
+
+
+To do: documentation

@@ -1,7 +1,16 @@
+CONTRIBUTORS
+INSTALL.md
 LICENSE
+MANIFEST.in
+README.md
+setup.cfg
 setup.py
+engineconomics/__init__.py
+engineconomics/_meta.py
+engineconomics/engineconomics.py
 engineconomics.egg-info/PKG-INFO
 engineconomics.egg-info/SOURCES.txt
 engineconomics.egg-info/dependency_links.txt
+engineconomics.egg-info/not-zip-safe
 engineconomics.egg-info/requires.txt
 engineconomics.egg-info/top_level.txt
