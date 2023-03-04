@@ -56,9 +56,6 @@ from .engineconomics import(
 def get_engineconomics_version():
     return __version__
 
-
-
-
 # Stop polluting the namespace
 
 ## Remove root package info
@@ -67,4 +64,3 @@ del version
 del release
 del contributors
 del author_email
-del contributors
