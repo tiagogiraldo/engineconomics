@@ -384,7 +384,7 @@ class time_value(object):
 
 
 
-    def vpn_terminal_value(self, cf_n: float, r:float, g:float, n:float):
+    def vpn_terminal_value(self, cf_n: float, r:float, g:float, n:float)->float:
         '''
         This function returns two values.  The first is the terminal value in period n. 
         The second returns the present value of this terminal value in period 0.
@@ -402,13 +402,13 @@ class time_value(object):
         self.r = r
         self.g = g
         self.n = n
-        tval = (self.cf_n * ( 1 + self.g)) / (self.r - self.g)
-        tvpv = tval * factor.pgivenfsp(self, self.r, self.n)
+        self.tval = (self.cf_n * ( 1 + self.g)) / (self.r - self.g)
+        self.tvpv = self.tval * factor.pgivenfsp(self, self.r, self.n)
 
-        return tval, tvpv
+        return self.tval, self.tvpv
 
 
-    def vpn_terminal_value_variable_rates(self, cf_n:float, rate_list:list, g:float):
+    def vpn_terminal_value_variable_rates(self, cf_n:float, rate_list:list, g:float)->float:
         '''
         This function returns two values.  The first is the terminal value in period n. 
         The second returns the present value of this terminal value in period 0.
