@@ -431,7 +431,8 @@ class time_value(object):
         tval = (self.cf_n * ( 1 + self.g)) / (self.r - self.g)
         cf_list = [0] * len_r
         cf_list[len_r-1] = tval
-        tvpv = time_value.npviv(self, cf_list, self.rate_list) 
+        self.cf_list = cf_list
+        tvpv = time_value.npviv(self, self.cf_list, self.r_list) 
 
         return tval, tvpv
 
