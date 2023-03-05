@@ -428,13 +428,13 @@ class time_value(object):
         self.cf_n = cf_n
         self.r_list = rate_list
         self.g = g
-        tval = (self.cf_n * ( 1 + self.g)) / (self.r - self.g)
+        self.tval = (self.cf_n * ( 1 + self.g)) / (self.r - self.g)
         cf_list = [0] * len_r
-        cf_list[len_r-1] = tval
+        cf_list[len_r-1] = self.tval
         self.cf_list = cf_list
-        tvpv = time_value.npviv(self, self.cf_list, self.r_list) 
+        self.tvpv = time_value.npviv(self, self.cf_list, self.r_list) 
 
-        return tval, tvpv
+        return self.tval, self.tvpv
 
 class time_value_table(object):
 
