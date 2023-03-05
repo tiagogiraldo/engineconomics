@@ -418,18 +418,20 @@ class time_value(object):
             r: Discount cash flow rate at year n
             g: Growth rate
         '''
+        
         len_r = len(rate_list)
         r = rate_list[len_r-1]
 
         assert r != g, f"The interest rate {r} must be diferent from growth {g}"
         
+        self.r = r
         self.cf_n = cf_n
         self.r_list = rate_list
         self.g = g
         tval = (self.cf_n * ( 1 + self.g)) / (self.r - self.g)
         cf_list = [0] * len_r
         cf_list[len_r-1] = tval
-        tvpv = time_value.npviv(self, cf_list, rate_list) 
+        tvpv = time_value.npviv(self, cf_list, self.rate_list) 
 
         return tval, tvpv
 
