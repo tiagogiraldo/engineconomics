@@ -9,7 +9,7 @@ from scipy.optimize import root
 
 class factor(object):
     '''
-    Engineering economy factors
+    Engineering economics factors
     '''
     
     def pgivenfsp(self, i:float, n:int)->float:
@@ -384,7 +384,7 @@ class time_value(object):
 
 
 
-    def vpn_terminal_value(self, cf_n: float, r:float, g:float, n:float):
+    def vpn_terminal_value(self, cf_n: float, r:float, g:float, n:float)->float:
         '''
         This function returns two values.  The first is the terminal value in period n. 
         The second returns the present value of this terminal value in period 0.
@@ -402,13 +402,13 @@ class time_value(object):
         self.r = r
         self.g = g
         self.n = n
-        tval = (self.cf_n * ( 1 + self.g)) / (self.r - self.g)
-        tvpv = tval * factor.pgivenfsp(self, self.r, self.n)
+        self.tval = (self.cf_n * ( 1 + self.g)) / (self.r - self.g)
+        self.tvpv = self.tval * factor.pgivenfsp(self, self.r, self.n)
 
-        return tval, tvpv
+        return self.tval, self.tvpv
 
 
-    def vpn_terminal_value_variable_rates(self, cf_n:float, rate_list:list, g:float):
+    def vpn_terminal_value_variable_rates(self, cf_n:float, rate_list:list, g:float)->float:
         '''
         This function returns two values.  The first is the terminal value in period n. 
         The second returns the present value of this terminal value in period 0.
@@ -418,20 +418,23 @@ class time_value(object):
             r: Discount cash flow rate at year n
             g: Growth rate
         '''
+        
         len_r = len(rate_list)
         r = rate_list[len_r-1]
 
         assert r != g, f"The interest rate {r} must be diferent from growth {g}"
         
+        self.r = r
         self.cf_n = cf_n
         self.r_list = rate_list
         self.g = g
-        tval = (self.cf_n * ( 1 + self.g)) / (self.r - self.g)
+        self.tval = (self.cf_n * ( 1 + self.g)) / (self.r - self.g)
         cf_list = [0] * len_r
-        cf_list[len_r-1] = tval
-        tvpv = time_value.npviv(self, cf_list, rate_list) 
+        cf_list[len_r-1] = self.tval
+        self.cf_list = cf_list
+        self.tvpv = time_value.npviv(self, self.cf_list, self.r_list) 
 
-        return tval, tvpv
+        return self.tval, self.tvpv
 
 class time_value_table(object):
 
@@ -1050,7 +1053,7 @@ class time_value_plot(object):
                 if i>0:
                     arrowcolor = 'rgb(77,7,252)'
                     xanchor = 'right'
-                    text = i
+                    text = round(i,2)
                     textangle = 0
                     visible=True                     
                 else:
@@ -1113,6 +1116,7 @@ class time_value_plot(object):
             y_i_data = [0.] * (n) + [fv]
 
             df= DataFrame(list(zip(x_data, y_i_data, y_o_data)), columns=["Period", "Income", "Outcome"])
+            print(df)
 
             if  (self.cf_dic['Factor'] == 'P/F'):
                 title = f"{fv: .4f} * (P/F, i: {self.cf_dic['i']*100:.2f}%  n: {self.cf_dic['n']}) = {-pv:.4f}"
@@ -1591,7 +1595,7 @@ class compound_interest(object):
         
         return ((self.fv/self.pv)**(1/self.n))-1
 
-    def ei(self, r: float, m: float):
+    def ei(self, r: float, m: float)->float:
         '''
         ei: Effective Interest Per Time Period
         
@@ -1602,8 +1606,29 @@ class compound_interest(object):
         self.r = r
         self.m = m
         return (1 + self.r / self.m)**self.m - 1
+    
+    def ipa(self, ipm:float)->float:
+        '''
+        ipa: Interest Paid In Advance Per Time Period
 
-    def ni(self, i: float, m: float):
+        Input arguments:
+            ipm: Interest Paid at Maturity Per Time Period
+        '''
+        self.ipm = ipm
+        return self.ipm/(1 + self.ipm)
+    
+
+    def ipm(self, ipa:float)->float:
+        '''
+        ipm: Interest Paid at Maturity Per Time Period
+
+        Input arguments:
+            ipa: Interest Paid In Advance Per Time Period
+        '''
+        self.ipa = ipa
+        return self.ipa/(1+self.ipa)
+
+    def ni(self, i: float, m: float)->float:
         '''
         ni: Nominal annual interest rate
 
@@ -1615,7 +1640,7 @@ class compound_interest(object):
         self.m = m
         return self.m * ((1+self.i)**(1/self.m) - 1)
 
-    def cci(self, r):
+    def cci(self, r)->float:
         '''
         cci: Effective compounded continuously interest rate from nominal interest rate
 
@@ -1625,7 +1650,7 @@ class compound_interest(object):
         self.r = r
         return exp(self.r) -1 
 
-    def nci(self,i):
+    def nci(self,i)->float:
         '''
         nci: Nominal interest rate from continous interest rate
 
@@ -1635,7 +1660,7 @@ class compound_interest(object):
         self.i = i
         return log(1 + self.i)
 
-    def rir(self, nir, g):
+    def rir(self, nir, g)->float:
         '''
         rir: real interest rate
 
@@ -1647,13 +1672,13 @@ class compound_interest(object):
         self.g = g
         return (1+self.nir)/(1+self.g)
 
-    def nir(self, rir, g):
+    def nir(self, rir, g)->float:
         '''
         nir: nominal interest rate
 
         Input arguments:
-        rr: Real interest rate
-        g:  Inflation rate
+            rr: Real interest rate
+            g:  Inflation rate
         '''
         self.rir =rir 
         self.g = g
