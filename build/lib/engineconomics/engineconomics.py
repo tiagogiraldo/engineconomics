@@ -1644,7 +1644,7 @@ class compound_interest(object):
         '''
         self.i = i
         self.m = m
-        return self.m * ((1+self.i)**(1/self.m) - 1)
+        return ((1+self.i)**(1/self.m) - 1)
 
     def cci(self, r)->float:
         '''
