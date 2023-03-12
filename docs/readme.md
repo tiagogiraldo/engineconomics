@@ -1,6 +1,6 @@
 # Documents
 
-<img src="../images/img_2.png" alt = "Cash Flow Plot" class="center">
+<img src="images/img_2.png" alt = "Cash Flow Plot" class="center">
 
 <br></br>
 
