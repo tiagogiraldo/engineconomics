@@ -1607,26 +1607,26 @@ class compound_interest(object):
         self.m = m
         return (1 + self.r/self.m)**self.m - 1
     
-    def ipa(self, ipm:float)->float:
+    def ipa(self, im:float)->float:
         '''
         ipa: Interest Paid In Advance Per Time Period.
 
         Input arguments:
             ipm: Interest Paid at Maturity Per Time Period.
         '''
-        self.ipm = ipm
-        return self.ipm/(1 + self.ipm)
+        self.im = im
+        return self.im/(1 + self.im)
     
 
-    def ipm(self, ipa:float)->float:
+    def ipm(self, ia:float)->float:
         '''
         ipm: Interest Paid at Maturity Per Time Period.
 
         Input arguments:
             ipa: Interest Paid In Advance Per Time Period.
         '''
-        self.ipa = ipa
-        return self.ipa/(1-self.ipa)
+        self.ia = ia
+        return self.ia/(1-self.ia)
 
     def di(self, i: float, m: float)->float:
         '''
