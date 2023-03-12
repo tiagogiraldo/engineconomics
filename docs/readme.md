@@ -1,3 +1,15 @@
+<style>
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+<img src="../images/img_2.png" alt = "Cash Flow Plot" class="center">
+
+<br></br>
+
 These documents contain different examples from the engineconomics library applied to problems usually encountered in Engineering Economics, Finance, Banking, Project Assessment, and Economics related to the Time Value of Money. 
 
 _The cash flows that are analyzed with this library are restricted to uniform times or fractions, **without taking into account cash flows associated to dates**, if you have something like that you must convert the periods to integers or fractions of time to be evaluated with the functions developed here._
