@@ -1,14 +1,5 @@
 # EnginEconomics
 
-<style>
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
-
-
 <img src="images/img_1.png">
 
 <br></br>

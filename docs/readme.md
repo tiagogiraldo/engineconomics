@@ -1,10 +1,4 @@
-<style>
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
+# Documents
 
 <img src="../images/img_2.png" alt = "Cash Flow Plot" class="center">
 
