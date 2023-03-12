@@ -5,6 +5,7 @@
 from pandas import DataFrame
 from numpy import exp, log
 from plotly.express import bar
+from plotly.express import area
 from scipy.optimize import root
 
 class factor(object):
@@ -1577,6 +1578,29 @@ class time_value_plot(object):
         
         return(fig.show())        
 
+    def amor_table_plot(self, loan_amount:float, rate:float, loan_term:int, periodicity:str):
+    
+        '''
+        Plotting principal and interest payments over the repayment period
+        '''
+        self.loan_amount=loan_amount, 
+        self.rate=rate, 
+        self.loan_term=loan_term, 
+        self.periodicity=periodicity
+
+        df = time_value_table.uniform_loan_amortization(self,
+                                                        self.loan_amount, 
+                                                        self.rate, 
+                                                        self.loan_term, 
+                                                        self.periodicity)
+        x = df.columns[0]
+        y = ['Principal', 'Interest']
+        payment = df.iloc[1,2]
+        title1 = 'Evolution of Principal and Interest payments over the repayment period'
+        title2 = f'Amount: {loan_amount: ,.2f}, Payment: {payment: ,.2f}, i: {rate: .2%}, Term: {loan_term}, Periodicity: {periodicity}'
+        title = title1 +'<br>' + title2
+        fig = area(df, x="Month", y=['Principal', 'Interest'], title=title)
+        return(fig.show())
 
 class compound_interest(object):
     
