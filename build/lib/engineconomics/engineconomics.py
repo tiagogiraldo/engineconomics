@@ -1684,4 +1684,4 @@ class compound_interest(object):
 
         irr_ = root(f, [0], tol=0.00000001)['x'][0]
         
-        return irr_            
+        return irr_ 

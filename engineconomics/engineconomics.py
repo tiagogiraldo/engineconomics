@@ -1585,8 +1585,8 @@ class compound_interest(object):
         spi: Single Payment Interest
 
         Input arguments:        
-            pv: Present Value
-            fv: Future Value
+            pv: Present Value.
+            fv: Future Value.
         '''
         
         self.pv = pv
@@ -1597,22 +1597,22 @@ class compound_interest(object):
 
     def ei(self, r: float, m: float)->float:
         '''
-        ei: Effective Interest Per Time Period
+        ei: Effective Interest Per Time Period.
         
         Input arguments:
-            r:  Nominal Interest Rate For Same Time Period
-            m:  Number of Times Interest Is Compounded Per Stated Time Period
+            r:  Interest Rate For Same Time Period.
+            m:  Number of Times Interest Is Compounded Per Stated Time Period.
         '''
         self.r = r
         self.m = m
-        return (1 + self.r / self.m)**self.m - 1
+        return (1 + self.r/self.m)**self.m - 1
     
     def ipa(self, ipm:float)->float:
         '''
-        ipa: Interest Paid In Advance Per Time Period
+        ipa: Interest Paid In Advance Per Time Period.
 
         Input arguments:
-            ipm: Interest Paid at Maturity Per Time Period
+            ipm: Interest Paid at Maturity Per Time Period.
         '''
         self.ipm = ipm
         return self.ipm/(1 + self.ipm)
@@ -1620,78 +1620,60 @@ class compound_interest(object):
 
     def ipm(self, ipa:float)->float:
         '''
-        ipm: Interest Paid at Maturity Per Time Period
+        ipm: Interest Paid at Maturity Per Time Period.
 
         Input arguments:
-            ipa: Interest Paid In Advance Per Time Period
+            ipa: Interest Paid In Advance Per Time Period.
         '''
         self.ipa = ipa
-        return self.ipa/(1+self.ipa)
+        return self.ipa/(1-self.ipa)
 
-    def ni(self, i: float, m: float)->float:
+    def di(self, i: float, m: float)->float:
         '''
-        ni: Nominal annual interest rate
+        di: Discrete interest Rate or Compounding interest rate.
 
         Input arguments:
-            i:  Effective Interest Per Time Period
-            m:  Number of Times Interest Is Compounded Per Stated Time Period
+            i:  Effective Interest with Different Periodicity.
+            m:  Relationship of periods between rates.  In example:
+
+               -  12: Month to Year
+               -   6: Bimonthly to Year or Month to Half-year
+               -   4: Quaterly to Year 
+               -  1/12: Year to Month
+
         '''
         self.i = i
         self.m = m
-        return self.m * ((1+self.i)**(1/self.m) - 1)
+        return ((1+self.i)**(1/self.m) - 1)
 
     def cci(self, r)->float:
         '''
-        cci: Effective compounded continuously interest rate from nominal interest rate
+        cci: Continuous Interest Rate to Discrete Interest Rate.
 
         Input arguments:
-            r:  Nominal Interest Rate For Same Time Period
+            r:  Discrete Interest Rate For Same Time Period.
         '''
         self.r = r
         return exp(self.r) -1 
 
-    def nci(self,i)->float:
+    def dci(self,i)->float:
         '''
-        nci: Nominal interest rate from continous interest rate
+        dci: Discrete Interest Rate to Continuous Interest Rate.
 
         Input argument:
-            i:  Effective Interest Per Time Period
+            i:  Effective Interest Per Time Period.
         '''
         self.i = i
         return log(1 + self.i)
 
-    def rir(self, nir, g)->float:
-        '''
-        rir: real interest rate
-
-        Inputs arguments:
-            nir: Nominal interest rate
-            g: Inflation rate 
-        '''
-        self.nir = nir
-        self.g = g
-        return (1+self.nir)/(1+self.g)
-
-    def nir(self, rir, g)->float:
-        '''
-        nir: nominal interest rate
-
-        Input arguments:
-            rr: Real interest rate
-            g:  Inflation rate
-        '''
-        self.rir =rir 
-        self.g = g
-        return (1+self.rir)*(1+self.g)
-
     def irr(self,npw, period_list:list, cf_list:list):
         '''
-        Estimates the internal rate of return for a given series of cash flows.
+        iir: Internal Rate of Return.
         
         Input arguments:
-            period_list: Period list
-            cf_list: Cash flow list
-            i: Effective interest rate
+            period_list: Period list.
+            cf_list: Cash flow list.
+            i: Effective interest rate.
         '''
         self.period_list = period_list
         self.cf_list = cf_list
@@ -1702,4 +1684,4 @@ class compound_interest(object):
 
         irr_ = root(f, [0], tol=0.00000001)['x'][0]
         
-        return irr_            
+        return irr_ 
