@@ -1583,9 +1583,9 @@ class time_value_plot(object):
         '''
         Plotting principal and interest payments over the repayment period
         '''
-        self.loan_amount=loan_amount, 
-        self.rate=rate, 
-        self.loan_term=loan_term, 
+        self.loan_amount=loan_amount 
+        self.rate=rate 
+        self.loan_term=loan_term 
         self.periodicity=periodicity
 
         df = time_value_table.uniform_loan_amortization(self,
