@@ -3,9 +3,9 @@
 # Copyright 2023, Engineconomics
 author = "Santiago Giraldo"
 author_email = "sgmlmail@protonmail.com"
-version = "0.0.1"
-full_version = "0.0.1"
-git_version = '3b82b2c89a6f20b44e2c2c6b9df06a290ee0218f'
+version = "1.0.0"
+full_version = "1.0.0"
+git_version = 'f16fd7c4a96a6b246dd3a88e7d907e05030267a4'
 release = False
 contributors = ['Santiago Giraldo <@tiagogiraldo>', '']
 homepage = "https://github.com/tiagogiraldo/engineconomics"

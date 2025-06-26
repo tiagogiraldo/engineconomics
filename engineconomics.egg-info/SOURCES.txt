@@ -15,4 +15,3 @@ engineconomics.egg-info/dependency_links.txt
 engineconomics.egg-info/not-zip-safe
 engineconomics.egg-info/requires.txt
 engineconomics.egg-info/top_level.txt
-engineconomics/.ipynb_checkpoints/engineconomics-checkpoint.py

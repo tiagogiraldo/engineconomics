@@ -52,9 +52,9 @@ def get_docs_url():
 import sys 
 import platform
 
-MAJOR = 0
+MAJOR = 1
 MINOR = 0
-MICRO = 1
+MICRO = 0
 ISRELEASED = False
 VERSION = f"{MAJOR}.{MINOR}.{MICRO}"
 DESCRIPTION = 'This package develops a financial calculator with python.'
