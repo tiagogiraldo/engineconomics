@@ -1678,11 +1678,11 @@ class time_value_plot(object):
         self.loan_term=loan_term 
         self.periodicity=periodicity
 
-        df = time_value_table.variable_payment_loan_amortization(self,
-                                                                self.loan_amount, 
-                                                                self.rate,
-                                                                self.loan_term, 
-                                                                self.periodicity)
+        df = time_value_table.uniform_loan_amortization(self,
+                                                        self.loan_amount, 
+                                                        self.rate,
+                                                        self.loan_term, 
+                                                        self.periodicity)
         x = df.columns[0]
         y = ['Principal', 'Interest']
         payment = df.iloc[1,2]
