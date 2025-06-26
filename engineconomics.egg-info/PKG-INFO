@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: engineconomics
-Version: 1.0.1
+Version: 0.0.1
 Summary: This package computes the basic financial formulas in python as those used in engineering economics.
 Home-page: https://github.com/tiagogiraldo/engineconomics
 Download-URL: https://github.com/tiagogiraldo/engineconomics
