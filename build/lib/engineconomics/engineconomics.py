@@ -1,7 +1,3 @@
-#import pandas as pd
-#import numpy as np
-#import matplotlib.pyplot as plt
-
 from pandas import DataFrame
 from numpy import exp, log
 from plotly.express import bar
@@ -153,18 +149,27 @@ class factor(object):
 
 
 class time_value(object):
-      
+    """
+    Time Value Functions
+    """
 
     def cfv(self, CF: float, F: str, i: float, n: float, g: float=None) -> float:
         '''
-        "P/F": Find P Present Worth given F Future worth, interest i and number of periods n.
-        "F/P": Find F Future worth given P Present Worth, interest i and number of periods n., 
-        "P/A": Find P Present Worth given A Equal payment series, interest i and number of periods n.
-        "A/P": Find A Equal payment series given P Present Worth, interest i and number of periods n.  
-        "F/A": Find F Future worth given A Equal payment series, interest i and number of periods n. 
-        "A/F": Find A Equal payment series given F Future worth, interest i and number of periods n.   
-        "P/G": Find P Present Worth given G Arithmetic Gradient, interest i and number of periods n.
-        "P/g"Find P Present Worth given g Geometric Gradient, A1 First payment, interest i and number of periods n.
+        input arguments:
+            CF: Assessed cash flow
+            F: Factor types =[
+                "P/F": Find P Present Worth given F Future worth, interest i and number of periods n.
+                "F/P": Find F Future worth given P Present Worth, interest i and number of periods n., 
+                "P/A": Find P Present Worth given A Equal payment series, interest i and number of periods n.
+                "A/P": Find A Equal payment series given P Present Worth, interest i and number of periods n.  
+                "F/A": Find F Future worth given A Equal payment series, interest i and number of periods n. 
+                "A/F": Find A Equal payment series given F Future worth, interest i and number of periods n.   
+                "P/G": Find P Present Worth given G Arithmetic Gradient, interest i and number of periods n.
+                "P/g": Find P Present Worth given g Geometric Gradient, A1 First payment, interest i and number of periods n.
+                ]
+            i: Efective interest rate
+            n: Term
+            g: Geometric Gradient
         '''
         cf_asked = {
             "P/F": "PV", 
@@ -215,7 +220,6 @@ class time_value(object):
         try:
 
             if self.F in factor_list:
-  
                 if self.F == "P/F":
                     value = self.CF * factor.pgivenfsp(self, self.i, self.n)
                 elif self.F == "F/P":
@@ -438,10 +442,12 @@ class time_value(object):
         return self.tval, self.tvpv
 
 class time_value_table(object):
-
+    """
+    Cash Flow Tables
+    """
     def cfdataframe(self, cf_dic:dict):
         '''
-        
+        Passes the result of a dictionary of economic engineering formulas to a pandas dataframe.
         '''
         
         self.cf_dic= cf_dic
@@ -459,6 +465,7 @@ class time_value_table(object):
             y_o_data = [pv] + [0.] * (n)
             y_i_data = [0.] * (n) + [fv]
 
+            
             return DataFrame(list(zip(x_data, y_i_data, y_o_data)), columns=["Period", "Income", "Outcome"])
 
             
@@ -534,6 +541,15 @@ class time_value_table(object):
             return DataFrame(list(zip(x_data, y_i_data, y_o_data)), columns=["Period", "Gradient Income", "Outcome"])            
 
     def npvtable(self, period_list:list, cf_list:list, i:float):
+        """
+        Creates a pandas dataframe for a cash flow of a given length
+
+        input arguments:
+            period_list:  Term cash flow list
+            cf_list: Cash flow list to evalute
+            i: cash flow interest rate
+
+        """
 
         self.period_list = period_list
         self.cf_list = cf_list
@@ -541,10 +557,8 @@ class time_value_table(object):
 
         p_len = len(self.period_list)
         cf_len = len(self.cf_list)
-        assert p_len == cf_len, f"The length of the period list ({pl}) must be equal to the length of the cash flow list ({cf_len})." 
+        assert p_len == cf_len, f"The length of the period list must be equal to the length of the cash flow list ({cf_len})." 
         assert i > 0, f"Interest rate {i} must be greater than 0"  
-
-
 
         n_max=max(self.period_list) + 1 
         CFL = list(zip(self.period_list, self.cf_list))
@@ -599,9 +613,9 @@ class time_value_table(object):
     def npvivtable(self, period_list:list, cf_list:list, iv:list):
         '''
         Input arguments:
-            period_list: 
-            cf_list
-            iv
+            period_list:  Cash flow term list
+            cf_list: Cash flow list
+            iv: Variable interest list
         '''
         
         len_period_list = len(period_list)
@@ -662,6 +676,14 @@ class time_value_table(object):
 
 
     def uniform_loan_amortization(self, loan_amount:float, rate:float, loan_term:int, periodicity:str='Y'):
+        """
+        loan_amount: Amount to lend
+        rate: fixed interest rates during the loan period
+        loan_term: Duration of loan
+        periodicity: Frequency of loan payments ({'M':'Month', 'B':'Bimonth', 'Q':'Quarter','S': 'Semiannual', 'Y':'Year')
+        per_conv = ['M', 'B', 'Q','S', 'Y']
+        per_names = {'M':'Month', 'B':'Bimonth', 'Q':'Quarter','S': 'Semiannual', 'Y':'Year'}
+        """
         per_conv = ['M', 'B', 'Q','S', 'Y']
         per_names = {'M':'Month', 'B':'Bimonth', 'Q':'Quarter','S': 'Semiannual', 'Y':'Year'}
         assert periodicity in per_conv, f"Input 'Y' for Year, 'S' for Semiannual, 'Q' for Quarterly,  'B' for Bimonthly and 'M' for Monthly"
@@ -716,12 +738,81 @@ class time_value_table(object):
         amortization_table = DataFrame(data=data, columns=columns)
 
         return amortization_table
+    
+    def variable_payment_loan_amortization(self, loan_amount:float, rate:list, loan_term:int, periodicity:str='Y'):
+        """
+        loan_amount: Amount to lend
+        rate: List of variable or fixed interest rates during the loan period
+        uniform capital payment:   loan_amount / loan_term
+        loan_term: Duration of loan
+        periodicity: Frequency of loan payments ({'M':'Month', 'B':'Bimonth', 'Q':'Quarter','S': 'Semiannual', 'Y':'Year')
+        variable interest payment:  Net balance * rate in period p
+        """
+        assert isinstance(rate, list), "Argument rate must be a list"
+        assert len(rate)==loan_term, "Argument rate must has a len equal to loan_term"
 
+        per_conv = ['M', 'B', 'Q','S', 'Y']
+        per_names = {'M':'Month', 'B':'Bimonth', 'Q':'Quarter','S': 'Semiannual', 'Y':'Year'}
+        assert periodicity in per_conv, f"Input 'Y' for Year, 'S' for Semiannual, 'Q' for Quarterly,  'B' for Bimonthly and 'M' for Monthly"
+        self.loan_amount= loan_amount
+        # self.rate = rate
+        self.loan_term = loan_term
+        self.periodicity = periodicity
+
+        per = list(range(self.loan_term + 1))
+        beg_bal = []
+        pay_per = []
+        pri_per = []
+        int_per = []
+        tot_pay = []
+        tot_int = []
+        rem_bal = []
+
+        period_principal = round(self.loan_amount / self.loan_term, 2)
+
+        pay_per.append(0)
+        beg_bal.append(self.loan_amount)
+        pri_per.append(0)
+        int_per.append(0)
+        tot_pay.append(0)
+        tot_int.append(0)
+        rem_bal.append(self.loan_amount)
+
+        for p in range(1, self.loan_term + 1):
+            beginning_balance = rem_bal[p-1]
+            period_interest = round(rem_bal[p-1] * rate[p-1], 2)
+            period_payment = period_principal + period_interest
+            total_principal = sum(pri_per) + period_payment
+            total_interest = sum(int_per) + period_interest
+            remaining_balance  = beginning_balance - period_principal
+
+            
+            beg_bal.append(beginning_balance)
+            pay_per.append(period_payment)
+            pri_per.append(period_principal)
+            int_per.append(period_interest)
+            tot_pay.append(total_principal)
+            tot_int.append(total_interest)
+            rem_bal.append(remaining_balance)            
+
+        
+        data = zip(per, beg_bal, pay_per, pri_per, int_per, tot_pay, tot_int, rem_bal)
+
+
+        period  = per_names[self.periodicity]
+        columns = [period, 'Beginning balance', 'Payment', 'Principal', 'Interest', 'Total Payment', 'Total Interest', 'Remaining Balance' ]
+
+        amortization_table = DataFrame(data=data, columns=columns)
+
+        return amortization_table    
 
 
 class time_value_plot(object):
     
     def cf_plot_bar(self, cf_dic:dict):
+        """
+        Cash Flow plot bars type
+        """
         
         self.cf_dic = cf_dic
 
@@ -1522,9 +1613,9 @@ class time_value_plot(object):
         return(fig.show())    
 
     def npvplotarrow(self, npvtable, i):
-        '''
-        Plot nominal cash flow stream from pandas data frame with npv
-        '''
+        """
+        Cash Flow plot arrows type
+        """
         # npvtable = npvtable[['Period', 'Income', 'Outcome']]        
         self.npvtable = npvtable
 
@@ -1578,8 +1669,7 @@ class time_value_plot(object):
         
         return(fig.show())        
 
-    def amor_table_plot(self, loan_amount:float, rate:float, loan_term:int, periodicity:str):
-    
+    def amor_table_plot(self, loan_amount:float, rate:float, loan_term:int, periodicity:str):   
         '''
         Plotting principal and interest payments over the repayment period
         '''
@@ -1588,11 +1678,11 @@ class time_value_plot(object):
         self.loan_term=loan_term 
         self.periodicity=periodicity
 
-        df = time_value_table.uniform_loan_amortization(self,
-                                                        self.loan_amount, 
-                                                        self.rate, 
-                                                        self.loan_term, 
-                                                        self.periodicity)
+        df = time_value_table.variable_payment_loan_amortization(self,
+                                                                self.loan_amount, 
+                                                                self.rate,
+                                                                self.loan_term, 
+                                                                self.periodicity)
         x = df.columns[0]
         y = ['Principal', 'Interest']
         payment = df.iloc[1,2]
@@ -1601,6 +1691,34 @@ class time_value_plot(object):
         title = title1 +'<br>' + title2
         fig = area(df, x="Month", y=['Principal', 'Interest'], title=title)
         return(fig.show())
+
+
+    def variable_amor_table_plot(self, loan_amount:float, rate:list, loan_term:int, periodicity:str):
+    
+        '''
+        Plotting principal and interest payments over the repayment period
+        '''
+        assert isinstance(rate, list), "Argument rate must be a list"
+        assert len(rate)==loan_term, "Argument rate must has a len equal to loan_term"
+        self.loan_amount=loan_amount 
+        self.rate=rate 
+        self.loan_term=loan_term 
+        self.periodicity=periodicity
+
+        df = time_value_table.variable_payment_loan_amortization(self,
+                                                        self.loan_amount, 
+                                                        self.rate, 
+                                                        self.loan_term, 
+                                                        self.periodicity)
+        x = df.columns[0]
+        y = ['Principal', 'Interest']
+        payment = df.iloc[1,2]
+        title1 = 'Evolution of Principal and Interest payments over the repayment period'
+        title2 = f'Amount: {loan_amount: ,.2f}, Payment: {payment: ,.2f}, i: variable, Term: {loan_term}, Periodicity: {periodicity}'
+        title = title1 +'<br>' + title2
+        fig = area(df, x="Month", y=['Principal', 'Interest'], title=title)
+        return(fig.show())
+
 
 class compound_interest(object):
     

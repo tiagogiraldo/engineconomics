@@ -3,6 +3,7 @@ INSTALL.md
 LICENSE
 MANIFEST.in
 README.md
+pyproject.toml
 setup.cfg
 setup.py
 engineconomics/__init__.py
@@ -14,3 +15,4 @@ engineconomics.egg-info/dependency_links.txt
 engineconomics.egg-info/not-zip-safe
 engineconomics.egg-info/requires.txt
 engineconomics.egg-info/top_level.txt
+engineconomics/.ipynb_checkpoints/engineconomics-checkpoint.py

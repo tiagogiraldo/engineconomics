@@ -14,7 +14,7 @@ Project-URL: Funding, ""
 Project-URL: Source Code, https://github.com/tiagogiraldo/engineconomics
 Keywords: engineconomics,egineering economics,finance,economics
 Platform: Any
-Classifier: Development Status :: 3 - Alpha,
+Classifier: Development Status :: 5 - Production/Stable,
 Classifier: Intended Audience :: Finance
 Classifier: Intended Audience:: Economics,
 Classifier: Intended Audience :: Developers
@@ -26,6 +26,9 @@ Classifier: Programming Language :: Python :: 3.6
 Classifier: Programming Language :: Python :: 3.7
 Classifier: Programming Language :: Python :: 3.8
 Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
 Classifier: Operating System :: Microsoft :: Windows
 Classifier: Operating System :: MacOS
 Classifier: Operating System :: POSIX
